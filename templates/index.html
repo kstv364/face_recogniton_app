@@ -5,39 +5,40 @@
 <head>
     <meta charset="utf-8">
     <title>Face Recognition</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
-    <script src="https://kit.fontawesome.com/5f3f547070.js" crossorigin="anonymous"></script>
+    <!-- <script src="https://kit.fontawesome.com/5f3f547070.js" crossorigin="anonymous"></script> -->
 </head>
 
 <body>
 
-    <!-- Website Title -->
-    <div class="container">
-        <h2 class='container-heading'><span>Face Recognition</span></h2>
-        <div class='description'>
-            <p>A Machine Learning Web App, Built with Flask, Deployed using Heroku.</p>
-        </div>
-
-        <div class="container">
-            <form action="{{ url_for('predict') }}" id="upload-file" method="post" enctype="multipart/form-data">
-                <label for="imageUpload" class="upload-label">
-                    Choose...
-                </label>
-                <input type="file" name="file" id="imageUpload" accept=".png, .jpg, .jpeg">
-                <button type="submit">Submit</button>
-            </form>
-        </div>
-
-        {% if result %}
-        <h2> You are : </h2>
-        <div class="card">
-            <img style="width: 50%" src="{{ url_for('send_file', filename=result) }}" alt="Image">
-        </div>
-
-        {% endif %}
+    <header class="site-header">
+        <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+            <div class="container">
+                <a class="navbar-brand mr-4" href="/">Face Recognition</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle"
+                    aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarToggle">
+                    <div class="navbar-nav">
+                        <a class="nav-item nav-link" href="/">Home</a>
+                    </div>
+                    <!-- Navbar Right Side -->
+                </div>
+            </div>
+        </nav>
+    </header>
 
 
-    </div>
+    <main role="main" id="main" style="margin-top: 100px" class="container">
+      
+        {% block content %}{% endblock %}
+
+    </main>
 
     <!-- Footer -->
     <div class='footer'>
@@ -50,6 +51,18 @@
         <p class='footer-description'>Made with ❤️ by Kaustav Chanda</p>
     </div>
 
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+        integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+        crossorigin="anonymous"></script>
 </body>
 
 </html>

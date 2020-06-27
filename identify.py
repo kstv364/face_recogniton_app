@@ -13,57 +13,60 @@ elon_face_encoding = face_recognition.face_encodings(image_of_elon)[0]
 
 #  Create arrays of encodings and names
 known_face_encodings = [
-  bill_face_encoding,
-  steve_face_encoding,
-  elon_face_encoding
+    bill_face_encoding,
+    steve_face_encoding,
+    elon_face_encoding
 ]
 
 known_face_names = [
-  "Teddy",
-  "Steve Jobs",
-  "Elon Musk"
+    "Teddy",
+    "Steve Jobs",
+    "Elon Musk"
 ]
 
-directory = os.path.join(os.getcwd(),'img','unknown')
+directory = os.path.join(os.getcwd(), 'img', 'unknown')
 print(directory)
 for filename in os.listdir(directory):
-# Load test image to find faces in
-  fullfilename = os.path.join(directory,filename)
-  test_image = face_recognition.load_image_file(fullfilename)
+    # Load test image to find faces in
+    fullfilename = os.path.join(directory, filename)
+    test_image = face_recognition.load_image_file(fullfilename)
 
-  # Find faces in test image
-  face_locations = face_recognition.face_locations(test_image)
-  face_encodings = face_recognition.face_encodings(test_image, face_locations)
+    # Find faces in test image
+    face_locations = face_recognition.face_locations(test_image)
+    face_encodings = face_recognition.face_encodings(
+        test_image, face_locations)
 
-  # Convert to PIL format
-  pil_image = Image.fromarray(test_image)
+    # Convert to PIL format
+    pil_image = Image.fromarray(test_image)
 
-  # Create a ImageDraw instance
-  draw = ImageDraw.Draw(pil_image)
+    # Create a ImageDraw instance
+    draw = ImageDraw.Draw(pil_image)
 
-  # Loop through faces in test image
-  for(top, right, bottom, left), face_encoding in zip(face_locations, face_encodings):
-    matches = face_recognition.compare_faces(known_face_encodings, face_encoding)
+    # Loop through faces in test image
+    for(top, right, bottom, left), face_encoding in zip(face_locations, face_encodings):
+        matches = face_recognition.compare_faces(
+            known_face_encodings, face_encoding)
 
-    name = "Unknown Person"
+        name = "Unknown Person"
 
-    # If match
-    if True in matches:
-      first_match_index = matches.index(True)
-      name = known_face_names[first_match_index]
-    
-    # Draw box
-    draw.rectangle(((left, top), (right, bottom)), outline=(255,255,0))
+        # If match
+        if True in matches:
+            first_match_index = matches.index(True)
+            name = known_face_names[first_match_index]
 
-    # Draw label
-    text_width, text_height = draw.textsize(name)
-    draw.rectangle(((left,bottom - text_height - 10), (right, bottom)), fill=(255,255,0), outline=(255,255,0))
-    draw.text((left + 6, bottom - text_height - 5), name, fill=(0,0,0))
+        # Draw box
+        draw.rectangle(((left, top), (right, bottom)), outline=(255, 255, 0))
 
-  del draw
+        # Draw label
+        text_width, text_height = draw.textsize(name)
+        draw.rectangle(((left, bottom - text_height - 10), (right,
+                                                            bottom)), fill=(255, 255, 0), outline=(255, 255, 0))
+        draw.text((left + 6, bottom - text_height - 5), name, fill=(0, 0, 0))
 
-  # Display image
-  #pil_image.show()
+    del draw
 
-  # Save image
-  pil_image.save(f'identify/identify{filename}')
+    # Display image
+    # pil_image.show()
+
+    # Save image
+    pil_image.save(f'identify/identify{filename}')
