@@ -116,5 +116,5 @@ if __name__ == '__main__':
         known_face_encodings.append(face_encoding)
         known_face_names.append(filename)
 
-    app.run(debug=True)
-    #app.run(host='0.0.0.0',port = port)
+    #app.run(debug=True)
+    app.run(host='0.0.0.0',port = port)
