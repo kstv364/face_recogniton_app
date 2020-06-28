@@ -1,1 +1,1 @@
-web: gunicorn app: frontend
+web: python frontend.py   --master --processes 4 --threads 2

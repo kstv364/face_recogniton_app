@@ -1,19 +1,27 @@
 import face_recognition
 from PIL import Image, ImageDraw
 from flask import Flask, render_template, request, url_for, send_from_directory, redirect
+from flask_cors import CORS, cross_origin
 from werkzeug.utils import secure_filename
 import os
 
+os.putenv('LANG', 'en_US.UTF-8')
+os.putenv('LC_ALL', 'en_US.UTF-8')
+
+
 app = Flask(__name__)
+CORS(app)
 app.config['PROCESSED_FOLDER'] = os.path.join(os.getcwd(), 'identify')
 
 
 @app.route('/', methods=['GET'])
+@cross_origin()
 def home():
     return render_template('home.html')
 
 
 @app.route("/register", methods=['POST'])
+@cross_origin()
 def register():
     if request.method == 'POST':
         f = request.files['file']
@@ -37,6 +45,7 @@ def register():
 
 
 @app.route('/predict', methods=['POST'])
+@cross_origin()
 def predict():
     if request.method == 'POST':
         f = request.files['file']
@@ -83,9 +92,12 @@ def predict():
 
 
 @app.route('/uploads/<filename>')
+@cross_origin()
 def send_file(filename):
     return send_from_directory(app.config['PROCESSED_FOLDER'], filename)
 
+port = os.getenv("PORT")
+port = int(port) if port else 5000
 
 if __name__ == '__main__':
 
@@ -105,3 +117,4 @@ if __name__ == '__main__':
         known_face_names.append(filename)
 
     app.run(debug=True)
+    #app.run(host='0.0.0.0',port = port)
